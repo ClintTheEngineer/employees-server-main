@@ -11,7 +11,7 @@ app.use(express.json());
 app.post("/employees", async(req, res) => {
     try {
       const { firstName, lastName, jobTitle, dateOfHire, salary, email, id} = req.body;
-      const newEmployee = await pool.query("INSERT INTO corp_data (first_name, last_name, job_title, date_of_hire, salary, e_mail, id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+      const newEmployee = await pool.query("INSERT INTO corp_data (first_name, last_name, job_title, hire_date, salary, email, id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
       [firstName, lastName, jobTitle, dateOfHire, salary, email, id]
       );
       res.json(newEmployee.rows[0])
@@ -61,7 +61,7 @@ app.put('/employees/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const { firstName, lastName, jobTitle, dateOfHire, salary, email } = req.body;
-        const updateEmployee = await pool.query("UPDATE corp_data SET first_name = $1, last_name = $2, job_title = $3, date_of_hire = $4, salary = $5, e_mail = $6 WHERE id = $7", 
+        const updateEmployee = await pool.query("UPDATE corp_data SET first_name = $1, last_name = $2, job_title = $3, hire_date = $4, salary = $5, email = $6 WHERE id = $7", 
         [firstName, lastName, jobTitle, dateOfHire, salary, email, id]
      );
 
